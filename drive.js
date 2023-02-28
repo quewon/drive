@@ -245,36 +245,44 @@ var characters = {
         let music = [
           {
             title: "latest pop hits",
+            doc_title: "Drive~",
             link: "https://youtu.be/oftolPu9qp4"
           },
           {
             title: "the beatles",
+            doc_title: "Drive My Car",
             link: "https://youtu.be/Man4Xw8Xypo"
           },
           {
             title: "nice relaxing ambient music for a nice relaxing trip",
+            doc_title: "d r i v e",
             link: "https://youtu.be/Jx7CyMZVhHY"
           },
           {
             title: "no it's not just video game music, it's good music in its own right",
+            doc_title: "drive",
             link: "https://youtu.be/2JsYHpiH2xs",
           },
           {
             title: "letsa go",
+            doc_title: "YOSHI VALLEY",
             link: "https://youtu.be/-Js49GdidVk",
           },
           {
             title: "so... when does the music start",
+            doc_title: "drive | rain sounds | 24 hours",
             link: "https://youtu.be/SnUBb-FAlCY",
           },
           {
             title: "",
-            link: ""
+            link: "",
+            doc_title: "DRIVE!!!",
           }
         ];
 
         let title = music[characters["2"].music_iterator].title;
         let link = music[characters["2"].music_iterator].link;
+        document.title = music[characters["2"].music_iterator].doc_title;
 
         if (this.music_object) this.music_object.remove();
         characters["2"].music_iterator++;
