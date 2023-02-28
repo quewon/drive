@@ -12,6 +12,7 @@ var stat_elements = {
   "weapon": document.getElementById("weapon"),
   "clothes": document.getElementById("clothes"),
   "win": document.getElementById("win"),
+  "compass": document.getElementById("compass"),
 };
 
 var todelete = [];

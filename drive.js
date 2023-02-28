@@ -69,10 +69,10 @@ var characters = {
     },
     turning: function() {
       let dialogue = [
-        "gotcha",
         "ok, turning now",
         "OK",
         "we are now turning",
+        "whee",
       ];
       print_speech(1, dialogue[Math.random() * dialogue.length | 0]);
       player.direction_change_counter = 0;
@@ -228,6 +228,7 @@ var characters = {
           y: player.direction.y
         };
         characters["1"].turning();
+        stat_elements.compass.textContent = vector_to_cardinal(player.direction);
 
         if (player.crosswalk) {
           player.crosswalk.div.classList.toggle("hidden");
@@ -488,6 +489,7 @@ function step() {
           };
           player.needs_direction = false;
           characters["1"].turning();
+          stat_elements.compass.textContent = vector_to_cardinal(player.direction);
         } else {
           // crash
           crash();
