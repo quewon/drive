@@ -152,7 +152,7 @@ var characters = {
 
       if (player.achievements.weapon) return;
 
-      stat_elements.weapon.textContent="☑";
+      stat_elements.weapon.classList.add("strikethrough");
       player.achievements.weapon = true;
 
       print("errand complete", 50, 50, 1);
@@ -166,7 +166,7 @@ var characters = {
 
       if (player.achievements.clothes) return;
 
-      stat_elements.clothes.textContent="☑";
+      stat_elements.clothes.classList.add("strikethrough");
       player.achievements.clothes = true;
 
       print("errand complete", 50, 50, 1);
@@ -603,6 +603,6 @@ function gamewin() {
   }
 
   print(text, 50, 50);
-  stat_elements.win.textContent="☑";
+  stat_elements.win.classList.add("strikethrough");
   player.gameover = true;
 }

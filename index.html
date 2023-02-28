@@ -294,6 +294,10 @@
     .music_object {
       transform: translate(-100%, -50%);
     }
+
+    .strikethrough {
+      text-decoration: line-through;
+    }
   </style>
 </head>
 <body>
@@ -302,14 +306,14 @@
 
     <div style="display: flex; gap: 1em">
       <div class="statbox">
-        KILLER's to do list<br>
+        KILLER's to-do list<br>
         <hr>
-        ☑ stop panicking<br>
-        ☑ call for help<br>
-        ☑ pay for gas<br>
-        <div id="weapon" style="display:inline">☐</div> throw away the murder weapon<br>
-        <div id="clothes" style="display:inline">☐</div> get a change of clothes<br>
-        <div id="win" style="display:inline">☐</div> disappear
+        – <s>stop panicking</s><br>
+        – <s>call for help</s><br>
+        – <s>pay for gas</s><br>
+        – <div id="weapon" style="display:inline">throw away the murder weapon</div><br>
+        – <div id="clothes" style="display:inline">get a change of clothes</div><br>
+        – <div id="win" style="display:inline">disappear</div>
       </div>
       <div class="statbox">
         the CAR<br>
