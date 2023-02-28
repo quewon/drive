@@ -418,7 +418,7 @@ function update() {
           characters["2"].get_new_clothes();
         } else if (e.type == "station") {
           characters["2"].visit_station();
-        } else if (e.type == "end" && !this.gameover) {
+        } else if (e.type == "end" && !player.gameover) {
           gamewin();
         }
       }
@@ -584,9 +584,9 @@ function gameover(message) {
 }
 
 function gamewin() {
-  let text = "... you made it.";
+  let text = "... you made it, with "+milliseconds_to_time(player.time)+" to spare.";
 
-  if (!achievements.weapon || !achievements.clothes) {
+  if (!player.achievements.weapon || !player.achievements.clothes) {
     text += "<br>but in your hurry, you forgot about the KILLER's errands.";
   } else {
     text += "<br>and the KILLER and the DRIVER parted ways for good.";
@@ -594,4 +594,5 @@ function gamewin() {
 
   print(text, 50, 50);
   stat_elements.win.textContent="☑";
+  player.gameover = true;
 }
