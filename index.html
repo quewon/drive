@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+  <style type="text/css">
+    :root {
+      --bg: #f0f4f7;
+      --text: #182026;
+      --highlight: red;
+
+      --speed: 1s;
+      --stop-speed: 2s;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Arial', sans-serif;
+      font-size: 13px;
+    }
+
+    .container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+      min-width: 400px;
+      width: 50%;
+      max-width: 600px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container div {
+      width: 100%;
+    }
+
+    .players {
+/*      position: absolute;*/
+/*      bottom: 0;*/
+/*      height: 30%;*/
+      width: 100%;
+      display: flex;
+/*      border: 1px dashed var(--text);*/
+      box-sizing: border-box;
+      border-top-left-radius: 70px;
+      border-top-right-radius: 70px;
+      padding: 1em;
+      z-index: 9;
+      background-image: radial-gradient(circle at 1px 1px, var(--text) .5px, transparent 0);
+      background-size: 3px 3px;
+    }
+
+    .inputarea {
+      width: 50%;
+      text-align: center;
+    }
+
+    .inputarea img {
+      width: 100px;
+      height: 100px;
+      border-radius: 20px;
+    }
+
+    input {
+      background: var(--bg);
+      font-family: inherit;
+      font-size: inherit;
+      color: inherit;
+      border: 1px solid var(--text);
+    }
+
+    input.highlight {
+      color: var(--highlight);
+    }
+
+    .scene {
+      position: relative;
+      width: 100%;
+      height: 40vh;
+      padding: 1em;
+      box-sizing: border-box;
+    }
+
+    img {
+      filter: brightness(1.3);
+    }
+
+    span {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+      text-align: center;
+      white-space: nowrap;
+      background: var(--bg);
+      padding: .1rem;
+    }
+
+    a {
+      color: var(--highlight);
+    }
+
+    .map {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      z-index: 1;
+    }
+
+    .blink {
+      animation: blink 500ms step-start 0s infinite;
+    }
+
+    .cross-left {
+      animation: cross-left 15s linear;
+    }
+
+    .cross-right {
+      animation: cross-right 15s linear;
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: 0.3;
+      }
+    }
+
+    @keyframes cross-left {
+      0% { left: 100%;  }
+      100% { left: 0%; }
+    }
+
+    @keyframes cross-right {
+      0% { left: 0%;  }
+      100% { left: 100%; }
+    }
+
+    button {
+      cursor: pointer;
+      font-family: inherit;
+      background: var(--bg);
+      color: var(--text);
+      border: 1px solid var(--text);
+      box-shadow: .3rem .3rem var(--text);
+      margin: -.3rem;
+    }
+
+    button:hover {
+      border-color: var(--highlight);
+    }
+
+    button:active {
+      margin: 0;
+      box-shadow: none;
+    }
+
+
+    .drive1 { 
+      animation: drive1 var(--speed) step-start 0s infinite; 
+      content: url("imgs/1/drive_1.png"); 
+    }
+    @keyframes drive1 { 
+      50% { content: url("imgs/1/drive_2.png"); } 
+    }
+
+    .hit1 { 
+      animation: hit1 var(--speed) step-start 0s infinite; 
+      content: url("imgs/1/hit_1.png");
+    }
+    @keyframes hit1 {
+      50% { content: url("imgs/1/hit_2.png"); }
+    }
+
+    .wait1 { 
+      animation: wait1 var(--stop-speed) step-start 0s infinite; 
+      content: url("imgs/1/wait_1.png");
+    }
+    @keyframes wait1 {
+      50% { content: url("imgs/1/wait_2.png"); }
+    }
+
+    .panic1 { content: url("imgs/1/panic.png"); animation: none }
+
+
+    .drive2 { 
+      animation: drive2 var(--speed) step-start 0s infinite; 
+      content: url("imgs/2/drive_1.png"); 
+    }
+    @keyframes drive2 {
+      50% { content: url("imgs/2/drive_2.png"); }
+    }
+
+    .map2 { 
+      animation: map2 var(--speed) step-start 0s infinite; 
+      content: url("imgs/2/map_1.png");
+    }
+    @keyframes map2 {
+      50% { content: url("imgs/2/map_2.png"); }
+    }
+
+    .wait2 { 
+      animation: wait2 var(--stop-speed) step-start 0s infinite; 
+      content: url("imgs/2/wait_1.png");
+    }
+    @keyframes wait2 {
+      50% { content: url("imgs/2/wait_2.png"); }
+    }
+
+    .turn2 { content: url("imgs/2/turn.png"); animation: none }
+
+    .hidden {
+      display: none;
+    }
+
+    .statbox {
+      border: 1px dashed var(--text); 
+      padding: 1em; 
+      box-sizing: border-box;
+    }
+
+    td, th, table {
+      border: dotted 1px var(--text);
+    }
+    th {
+      width: 40%;
+    }
+    table {
+      border: solid 1px var(--text);
+      width: 100%;
+      height: 70%;
+    }
+    td {
+      text-align: center;
+    }
+
+    .banner {
+      top: 1rem !important;
+      left: 0% !important;
+      transform: translate(0, 0);
+/*      animation: unfurl 5s;*/
+      overflow: hidden;
+      width: -moz-fit-content;
+      width: fit-content;
+
+      padding: 1rem;
+      border: 1px solid var(--text);
+      z-index: 1;
+
+      text-align: left;
+    }
+    @keyframes unfurl {
+      0% { 
+        padding-left: 0;
+        padding-right: 0;
+        border-color: transparent;
+        max-width: 0%;
+      }
+      20% {
+        padding-left: 1rem;
+        padding-right: 1rem;
+        border-color: var(--text);
+      }
+      100% { 
+        max-width: 100%;
+      }
+    }
+
+    .speechbubble {
+      padding: .5rem;
+      border: 1px solid var(--text);
+      border-radius: 10px;
+      z-index: 11;
+    }
+    .speechbubble:before {
+      display: block;
+      position: absolute;
+      content: '';
+      top: calc(100% + .5px);
+      transform: translate(50%, -50%) rotate(45deg) translateZ(0);
+      right: 50%;
+      height: .5rem;
+      width: .5rem;
+      background: linear-gradient(-45deg, var(--bg) 52%, transparent 0);
+      border: inherit;
+      border-width: 0 1px 1px 0;
+    }
+
+    .music_object {
+      transform: translate(-100%, -50%);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <div style="display: flex; gap: 1em">
+      <div class="statbox">
+        KILLER's to do list<br>
+        <hr>
+        ☑ stop panicking<br>
+        ☑ call for help<br>
+        ☑ pay for gas<br>
+        <div id="weapon" style="display:inline">☐</div> throw away the murder weapon<br>
+        <div id="clothes" style="display:inline">☐</div> get a change of clothes<br>
+        <div id="win" style="display:inline">☐</div> disappear
+      </div>
+      <div class="statbox">
+        the CAR<br>
+        <hr>
+        <table>
+          <tr>
+            <th>gas</th>
+            <td id="gas"></td>
+          </tr>
+          <tr>
+            <th>speed</th>
+            <td id="speed">unmoving</td>
+          </tr>
+          <tr>
+            <th>damage</th>
+            <td id="damage"></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="scene">
+
+      <img src="imgs/map.png" class="map hidden">
+
+      <div style="text-align: justify; margin:auto;">
+        you are the DRIVER (on the left). your best friend has just killed somebody. you're driving them to the end of the road, and that's it. you'll never talk to them ever again.<br><br>
+        you are also the KILLER (on the right). and unfortunately, there is a whole laundry list of things to be done.<br><br>
+        time is running out!!! you have twenty minutes before the law catches up with you...<br><br><br>
+        <button style="position: absolute; left: 50%; transform: translateX(-50%);" onclick="init();this.parentNode.remove();">get in the CAR</button>
+      </div>
+
+    </div>
+    <div class="players">
+
+      <div class="inputarea">
+        <img id="sprite2" class="wait2">
+        <div class="textinput">
+          <input id="input2" type="" name="" placeholder="control THE KILLER...">
+        </div>
+      </div>
+
+      <div class="inputarea">
+        <img id="sprite1" class="wait1">
+        <div class="textinput">
+          <input id="input1" type="" name="" placeholder="control THE DRIVER...">
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+
+<script type="text/javascript" src="map.js"></script>
+<script type="text/javascript" src="drive.js"></script>
+<script type="text/javascript" src="main.js"></script>
+
+</html>
