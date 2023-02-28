@@ -25,6 +25,7 @@ var player = {
     weapon: 5000,
     clothes: 5000,
   },
+  visited_station: false,
 };
 
 var characters = {
@@ -94,7 +95,10 @@ var characters = {
         stat_elements.speed.textContent = "unmoving";
         characters["1"].sprite.className = "wait1";
         characters["2"].sprite.className = "wait2";
-        if (player.wall_alert) player.wall_alert.remove();
+        if (player.wall_alert) {
+          player.wall_alert.remove();
+          player.wall_alert = null;
+        }
       },
       "slow": function() {
         if (!player.moving) {
@@ -168,8 +172,11 @@ var characters = {
       print("errand complete", 50, 50, 1);
     },
     visit_station: function() {
-      print_speech(2, "???");
-      print_speech(1, "what are we doing here");
+      if (player.visited_station) return;
+
+      player.visited_station = true;
+      print_speech(2, "???", 3);
+      print_speech(1, "what are we doing here", 3);
     },
     sprite: document.getElementById("sprite2"),
     commands: {
@@ -376,7 +383,7 @@ function update() {
     var speed = { "slow":.0001, "fast":.0002 }[player.speed] * delta;
 
     let prev_gas = player.gas;
-    player.gas -= speed / 10;
+    player.gas -= speed / 15;
     let fgas = Math.round(player.gas);
     if (Math.round(prev_gas) != fgas) {
       update_gas(fgas);
@@ -397,14 +404,14 @@ function update() {
       if (e.distance <= config.area_radius) {
         print("you are at: "+e.name, 0, 0, .5, "banner");
         if (e.type == "gas") {
-          if (player.gas > 5) {
-            player.gas = 5;
+          if (player.gas == 5) {
             print("gas tank full!", 50, 50, .001);
-          } {
+          } else {
             player.gas += .01;
             print("filling up gas.......", 50, 50, .001);
+            if (player.gas > 5) player.gas = 5;
+            update_gas(Math.round(player.gas));
           }
-          update_gas(Math.round(player.gas));
         } else if (e.type == "dump") {
           characters["2"].dump_murder_weapon();
         } else if (e.type == "hideout") {
@@ -503,10 +510,16 @@ function step() {
         print_speech(2, "!", 3);
         print_speech(1, "that was a wall", 3);
         player.ran_into_wall = true;
-        if (player.wall_alert) player.wall_alert.remove();
+        if (player.wall_alert) {
+          player.wall_alert.remove();
+          player.wall_alert = null;
+        }
       }
     } else {
-      if (player.wall_alert) player.wall_alert.remove();
+      if (player.wall_alert) {
+        player.wall_alert.remove();
+        player.wall_alert = null;
+      }
     }
 
     if (closest_event.type=="crosswalk" && closest_event.distance < 1) {
@@ -540,7 +553,10 @@ function step() {
     player.direction_change_counter = 0;
     if (player.direction_query_element) player.direction_query_element.remove();
     if (player.intersection_alert) player.intersection_alert.remove();
-    if (player.wall_alert) player.wall_alert.remove();
+    if (player.wall_alert) {
+      player.wall_alert.remove();
+      player.wall_alert = null;
+    }
   }
 }
 
