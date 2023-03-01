@@ -98,7 +98,7 @@ function keydown(char) {
 
 function print_speech(char, text, duration_in_seconds) {
   let min = char==1 ? 65 : 20;
-  if (duration_in_seconds==null) duration_in_seconds = 1;
+  if (duration_in_seconds==null) duration_in_seconds = 1.4;
   return print(text, min + Math.random() * 15, 100, duration_in_seconds, "speechbubble");
 }
 
@@ -166,6 +166,36 @@ function vector_to_cardinal(vec) {
   if (vec.x == 1) return "E";
   if (vec.x == -1) return "W";
 }
+
+var _colors = [
+  {
+    "prompt": "☪",
+    "--bg": "#f0f4f7",
+    "--text": "#182026",
+    "--highlight": "red",
+  },
+  {
+    "prompt": "☀",
+    "--bg": "#181b1e",
+    "--text": "#ced8e0",
+    "--highlight": "#eba4ff"
+  }
+];
+let _theme = -1;
+function toggle_theme() {
+  _theme++;
+  if (_theme >= _colors.length) _theme = 0;
+
+  let theme = _colors[_theme];
+  let properties = Object.keys(theme);
+
+  for (let property of properties) {
+    document.documentElement.style.setProperty(property, theme[property]);
+  }
+
+  document.getElementById("themebutton").textContent = theme.prompt;
+}
+toggle_theme();
 
 update_gas(Math.round(player.gas));
 update_damage(0);

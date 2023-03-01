@@ -71,7 +71,11 @@
       font-family: inherit;
       font-size: inherit;
       color: inherit;
-      border: 1px solid var(--text);
+/*      border: 1px solid var(--text);*/
+      border: none;
+      padding: .1rem;
+      padding-left: .2rem;
+      padding-right: .2rem;
     }
 
     input.highlight {
@@ -298,6 +302,19 @@
     .strikethrough {
       text-decoration: line-through;
     }
+
+    #themebutton {
+      color: var(--text);
+      cursor: pointer;
+      width: 1.75rem;
+      height: 1.75rem;
+      font-family: monospace;
+      font-size: 20px;
+    }
+
+    footer {
+      padding: 1rem;
+    }
   </style>
 </head>
 <body>
@@ -370,6 +387,8 @@
     </div>
 
   </div>
+
+  <footer><button id="themebutton" onclick="toggle_theme()">change colors</button></footer>
 
 </body>
 
